@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #4B5563;
+    background-color: #FFFFFF;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-secondary text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border-2 border-secondary text-secondary px-6 py-3 rounded-lg font-medium hover:bg-secondary hover:text-white transition-colors duration-200;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  .image-hover {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+}
