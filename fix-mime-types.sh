@@ -1,19 +1,11 @@
-# Команды настройки сервера для demo1.websmith-shop.com
+#!/bin/bash
 
-## 1. Создание директории сайта
-```bash
-sudo mkdir -p /var/www/demo1.websmith-shop.com
-sudo chown -R $USER:$USER /var/www/demo1.websmith-shop.com
-sudo chmod -R 755 /var/www/demo1.websmith-shop.com
-```
+# Быстрое исправление MIME типов для demo1.websmith-shop.com
 
-## 2. Создание конфигурации nginx
-```bash
-sudo nano /etc/nginx/sites-available/demo1.websmith-shop.com
-```
+echo "Исправление MIME типов для JavaScript и TypeScript файлов..."
 
-Содержимое файла:
-```nginx
+# Создаем временный файл с правильной конфигурацией
+sudo tee /tmp/nginx-fix.conf > /dev/null <<EOF
 server {
     listen 80;
     listen [::]:80;
@@ -56,7 +48,7 @@ server {
     
     # Handle Vue Router
     location / {
-        try_files $uri $uri/ /index.html;
+        try_files \$uri \$uri/ /index.html;
     }
     
     # Cache static assets
@@ -77,38 +69,23 @@ server {
         root /usr/share/nginx/html;
     }
 }
-```
+EOF
 
-## 3. Активация сайта
-```bash
-sudo ln -sf /etc/nginx/sites-available/demo1.websmith-shop.com /etc/nginx/sites-enabled/
-```
+# Копируем исправленную конфигурацию
+sudo cp /tmp/nginx-fix.conf /etc/nginx/sites-available/demo1.websmith-shop.com
 
-## 4. Проверка и перезагрузка nginx
-```bash
+# Проверяем конфигурацию
 sudo nginx -t
-sudo systemctl reload nginx
-```
 
-## 5. Настройка DNS (если нужно)
-Добавить A-запись:
-```
-demo1.websmith-shop.com -> IP_ВАШЕГО_СЕРВЕРА
-```
+if [ $? -eq 0 ]; then
+    echo "Конфигурация корректна, перезагружаем nginx..."
+    sudo systemctl reload nginx
+    echo "✅ MIME типы исправлены!"
+    echo "Теперь JavaScript и TypeScript файлы будут загружаться правильно."
+else
+    echo "❌ Ошибка в конфигурации nginx"
+    exit 1
+fi
 
-## 6. SSL сертификат (Let's Encrypt)
-```bash
-sudo certbot --nginx -d demo1.websmith-shop.com
-```
-
-## 7. Проверка статуса
-```bash
-sudo systemctl status nginx
-sudo nginx -t
-```
-
-## 8. Логи
-```bash
-sudo tail -f /var/log/nginx/access.log
-sudo tail -f /var/log/nginx/error.log
-```
+# Очищаем временный файл
+sudo rm /tmp/nginx-fix.conf

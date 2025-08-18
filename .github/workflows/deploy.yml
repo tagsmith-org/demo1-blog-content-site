@@ -37,6 +37,9 @@ jobs:
             # Очищаем директорию
             sudo rm -rf /var/www/demo1.websmith-shop.com/*
             
+            # Создаем временную директорию для загрузки
+            sudo mkdir -p /tmp/demo1-deploy
+            
       - name: Upload files
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -44,8 +47,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: "dist/*"
-          target: "/var/www/demo1.websmith-shop.com"
+          source: "dist/"
+          target: "/tmp/demo1-deploy"
+          strip_components: 0
           
       - name: Set permissions and restart
         uses: appleboy/ssh-action@v1.0.3
@@ -55,9 +59,15 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            # Перемещаем файлы из временной директории в основную
+            sudo cp -r /tmp/demo1-deploy/* /var/www/demo1.websmith-shop.com/
+            
             # Устанавливаем правильные права
             sudo chown -R www-data:www-data /var/www/demo1.websmith-shop.com
             sudo chmod -R 755 /var/www/demo1.websmith-shop.com
+            
+            # Очищаем временную директорию
+            sudo rm -rf /tmp/demo1-deploy
             
             # Перезапускаем nginx
             sudo systemctl reload nginx

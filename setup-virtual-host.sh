@@ -22,6 +22,25 @@ server {
     root $SITE_DIR;
     index index.html index.htm;
     
+    # MIME types for JavaScript and TypeScript
+    location ~* \.js$ {
+        add_header Content-Type "application/javascript";
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    location ~* \.ts$ {
+        add_header Content-Type "application/javascript";
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    location ~* \.mjs$ {
+        add_header Content-Type "application/javascript";
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
     # Gzip compression
     gzip on;
     gzip_vary on;
@@ -41,7 +60,7 @@ server {
     }
     
     # Cache static assets
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+    location ~* \.(css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
