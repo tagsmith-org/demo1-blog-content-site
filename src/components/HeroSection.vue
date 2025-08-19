@@ -25,11 +25,13 @@
             <span>{{ featuredPost.readTime }}</span>
           </div>
 
+
+
           <div class="flex flex-col sm:flex-row gap-4">
             <button @click="$emit('openArticle', featuredPost)" class="btn-primary">
               Read Full Article
             </button>
-            <button class="btn-secondary">
+            <button @click="exploreCategory" class="btn-secondary">
               Explore More
             </button>
           </div>
@@ -74,10 +76,11 @@ interface Props {
 
 interface Emits {
   (e: 'openArticle', post: BlogPost): void
+  (e: 'exploreCategory', categoryName: string): void
 }
 
-defineProps<Props>()
-defineEmits<Emits>()
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString)
@@ -86,5 +89,9 @@ function formatDate(dateString: string): string {
     month: 'long',
     day: 'numeric'
   })
+}
+
+function exploreCategory(): void {
+  emit('exploreCategory', props.featuredPost.category)
 }
 </script>

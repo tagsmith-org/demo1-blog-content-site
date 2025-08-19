@@ -30,15 +30,17 @@
 
     <!-- Main Content -->
     <div v-if="currentPage === 'home'">
-      <HeroSection :featured-post="featuredPost" @open-article="openArticleModal" />
-      <RecentPostsSection :posts="recentPosts" @open-article="openArticleModal" />
-      <CategoriesSection :categories="categories" @open-category="openCategoryPage" />
+      <HeroSection :featured-post="featuredPost" @open-article="openArticleModal"
+        @explore-category="handleExploreCategory" />
+      <RecentPostsSection :posts="recentPosts" :all-articles="articlesStore.allArticles"
+        @open-article="openArticleModal" @search="handleSearch" @select-article="openArticleModal"
+        @view-all-articles="handleViewAllArticles" />
+      <CategoriesSection :categories="categoriesWithCount" @open-category="openCategoryPage" />
       <NewsletterSection />
       <FooterSection />
     </div>
 
     <!-- Category Page -->
-    <!--
     <div v-else-if="currentPage === 'category'">
       <CategoryPage :category="selectedCategory" :posts="categoryPosts" @go-back="goToHome"
         @open-article="openArticleModal" />
@@ -61,6 +63,9 @@
     <EditArticleModal :is-open="isEditArticleModalOpen" :article="articleToEdit" @close="closeEditArticleModal" />
     <!-- Comments Modal -->
     <CommentsModal :is-open="isCommentsModalOpen" :article="articleForComments" @close="closeCommentsModal" />
+
+    <!-- Demo Info Panel -->
+    <DemoInfoPanel />
   </div>
 </template>
 
@@ -87,6 +92,7 @@ import { watch } from 'vue'
 import CommentsModal from './CommentsModal.vue'
 import { useCommentsStore } from '../stores/comments'
 import { useModalStore } from '../stores/modal'
+import DemoInfoPanel from './DemoInfoPanel.vue'
 
 const authStore = useAuthStore()
 const articlesStore = useArticlesStore()
@@ -102,6 +108,15 @@ const featuredPost = computed<BlogPost>(() => {
 const recentPosts = computed<BlogPost[]>(() => {
   const allArticles = articlesStore.allArticles
   return allArticles.filter(post => !post.featured).slice(0, 6)
+})
+
+// Динамически вычисляем количество статей в категориях
+const categoriesWithCount = computed(() => {
+  const allArticles = articlesStore.allArticles
+  return categories.map(category => ({
+    ...category,
+    count: allArticles.filter(article => article.category === category.name).length
+  }))
 })
 
 // Page state
@@ -164,6 +179,29 @@ function goToHome(): void {
   selectedCategory.value = null
   // Scroll to top when returning home
   window.scrollTo(0, 0)
+}
+
+function handleSearch(query: string): void {
+  // For now, just log the search query
+  // In the future, this could open a search results page
+  console.log('Search query:', query)
+  // You could implement search functionality here
+  // For example, filter articles and show results
+}
+
+function handleViewAllArticles(): void {
+  // Show all articles instead of just recent ones
+  console.log('View all articles clicked - showing all articles')
+  // For demo purposes, we'll show all articles in the recent posts section
+  // In a real app, this would navigate to a dedicated "All Articles" page
+}
+
+function handleExploreCategory(categoryName: string): void {
+  // Find the category object and open its page
+  const category = categories.find(cat => cat.name === categoryName)
+  if (category) {
+    openCategoryPage(category)
+  }
 }
 
 // Modal functions
