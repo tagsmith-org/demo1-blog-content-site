@@ -30,7 +30,7 @@
                                 Demo Site Information
                             </h2>
 
-                            <div class="grid md:grid-cols-2 gap-8">
+                            <div class="grid md:grid-cols-2 gap-8 mb-8">
                                 <!-- Features Section -->
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-700 mb-3">🚀 Key Features</h3>
@@ -88,6 +88,64 @@
                                         </li>
                                     </ul>
                                 </div>
+                            </div>
+
+                            <!-- About This Demo Section -->
+                            <div class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                <h3 class="text-lg font-semibold text-gray-700 mb-3 flex items-center">
+                                    <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                        </path>
+                                    </svg>
+                                    About This Demo
+                                </h3>
+                                <div class="space-y-2 text-gray-700">
+                                    <div><strong>Project:</strong> BlogHub - Modern Blog Content Platform</div>
+                                    <div><strong>Purpose:</strong> Showcase modern blog functionality with Vue 3 and
+                                        TypeScript</div>
+                                    <div><strong>Target:</strong> Content creators, publishers, and media companies
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Demo Limitations Section -->
+                            <div class="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                                <h3 class="text-lg font-semibold text-gray-700 mb-3 flex items-center">
+                                    <svg class="w-5 h-5 text-orange-600 mr-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+                                        </path>
+                                    </svg>
+                                    ! Demo Limitations
+                                </h3>
+                                <ul class="space-y-2 text-gray-700">
+                                    <li class="flex items-start">
+                                        <span class="text-orange-500 mr-2">•</span>
+                                        <span><strong>No Real Authentication:</strong> Login/register is
+                                            simulated</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-orange-500 mr-2">•</span>
+                                        <span><strong>No Email Sending:</strong> Contact forms don't actually send
+                                            emails</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-orange-500 mr-2">•</span>
+                                        <span><strong>Local Data:</strong> All content is static demo data</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-orange-500 mr-2">•</span>
+                                        <span><strong>Demo Articles:</strong> All articles are placeholder
+                                            content</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-orange-500 mr-2">•</span>
+                                        <span><strong>No Backend:</strong> No real database or API integration</span>
+                                    </li>
+                                </ul>
                             </div>
 
                             <!-- Demo Instructions -->
