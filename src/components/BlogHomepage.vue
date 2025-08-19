@@ -5,6 +5,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
+
           <div class="flex items-center space-x-4">
             <button @click="goToHome"
               class="text-2xl font-bold text-primary hover:text-secondary transition-colors duration-200">
@@ -13,6 +14,7 @@
           </div>
 
           <!-- Navigation -->
+          <!--
           <nav class="hidden md:flex items-center space-x-8">
             <button @click="goToHome" class="text-gray-600 hover:text-primary transition-colors duration-200">
               Home
@@ -36,6 +38,7 @@
     </div>
 
     <!-- Category Page -->
+    <!--
     <div v-else-if="currentPage === 'category'">
       <CategoryPage :category="selectedCategory" :posts="categoryPosts" @go-back="goToHome"
         @open-article="openArticleModal" />
